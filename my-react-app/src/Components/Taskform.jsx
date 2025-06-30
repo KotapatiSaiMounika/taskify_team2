@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import './Taskform.css';
 
 const TaskForm = () => {
@@ -10,6 +10,8 @@ const TaskForm = () => {
     status: 'todo',
   });
 
+  const[tasks,setTasks]=useState([]);
+
   const closeForm = () => setIsVisible(false);
 
   const handleChange = (e) => {
@@ -20,9 +22,20 @@ const TaskForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Task created:', formData);
+    setTasks(prev =>[...prev, formData]);
+    setFormData({
+    title: '',
+    description: '',
+    priority: '2',
+    status: 'todo',
+    });
   };
 
   if (!isVisible) return null;
+
+  useEffect(()=>{
+    console.log("Task Updated",tasks);
+  },[tasks])
 
   return (
     <div className="task-form">
